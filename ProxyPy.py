@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from time import sleep
+import os
 
 user_agent = ["Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion"]
 url_list_https = "https://api.proxyscrape.com?request=getproxies&proxytype=http&timeout=10000&country=all&ssl=all&anonymity=all"
@@ -14,6 +15,8 @@ class scrape_proxy:
     def http():
         sleep(2)
         print('\n\nStarting Scraping Http/Https Proxies....')
+
+        os.system('type NUL > ProxyPy_http.txt') #linux users use os.system('touch ProxyPy_http.txt')
         r = requests.get(url_list_https)
 
         with open('ProxyPy_http.txt', 'wb+') as f:
@@ -57,16 +60,19 @@ class scrape_proxy:
     def socks4():
         sleep(2)
         print('\n\nStarting Scraping Socks4 Proxies...')
+
+        os.system('type NUL > ProxyPy_socks4.txt') #linux users use os.system('touch ProxyPy_socks4.txt')
+
         r = requests.get(url_list_socks4)
 
-        with open('proxy_socks4.txt', 'wb+') as f:
+        with open('ProxyPy_socks4.txt', 'wb+') as f:
             f.write(r.content)
             f.close()
 
         url = 'https://www.proxy-list.download/api/v1/get?type=socks4'
         rr = requests.get(url)
 
-        with open('proxy_socks4.txt', 'ab+') as ff:
+        with open('ProxyPy_socks4.txt', 'ab+') as ff:
             ff.write(rr.content)
             ff.close()
 
@@ -78,30 +84,32 @@ class scrape_proxy:
         k = soup.find('div', {'class': 'centeredProxyList freeProxyStyle'})
         rep = str(k).replace('<div class="centeredProxyList freeProxyStyle">', '')
         rep = rep.replace('</div>', '')
-        with open('proxy_socks4.txt', 'a') as ww:
+        with open('ProxyPy_socks4.txt', 'a') as ww:
             ww.writelines(rep)
             ww.close()
 
         print('Removing Duplicates Please Wait')
         sleep(2)
 
-        with open('proxy_socks4.txt', 'r') as f:
+        with open('ProxyPy_socks4.txt', 'r') as f:
             print('Total Socks4 Proxies Available: ', len(f.readlines()))
 
     @staticmethod
     def socks5():
         sleep(2)
         print('\n\nStarting Scraping Socks5 Proxies')
+
+        os.system('type NUL > ProxyPy_socks5.txt') #linux users use os.system('touch ProxyPy_socks5.txt')
         r = requests.get(url_list_socks5)
 
-        with open('proxy_socks5.txt', 'wb+') as f:
+        with open('ProxyPy_socks5.txt', 'wb+') as f:
             f.write(r.content)
             f.close()
 
         url = 'https://www.proxy-list.download/api/v1/get?type=socks5'
         rr = requests.get(url)
 
-        with open('proxy_socks5.txt', 'ab+') as ff:
+        with open('ProxyPy_socks5.txt', 'ab+') as ff:
             ff.write(rr.content)
             ff.close()
 
@@ -110,7 +118,7 @@ class scrape_proxy:
         print('Removing Duplicates Please Wait')
         sleep(2)
 
-        with open('proxy_socks5.txt', 'r') as f:
+        with open('ProxyPy_socks5.txt', 'r') as f:
             print('Total Socks5 Proxies Available: ', len(f.readlines()))
 
     @staticmethod
