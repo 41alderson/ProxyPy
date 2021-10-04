@@ -26,22 +26,18 @@ class scrape_proxy:
 
         url2 = 'https://www.proxy-list.download/api/v1/get?type=https'
         url1 = 'https://www.proxy-list.download/api/v1/get?type=http'
-        url3 = 'https://cyber-hub.net/proxy/http.txt'
         l = requests.get(url2)
         ll = requests.get(url1)
-        lll = requests.get(url3)
         with open('ProxyPy_http.txt', 'ab+') as w:
             w.write(l.content)
             w.write(ll.content)
-            w.write(lll.content)
             w.close()
 
         urll = 'https://www.proxy-daily.com/'
         r = requests.get(urll).text
         soup = BeautifulSoup(r, features='html.parser')
         k = soup.find('div', {'class': 'centeredProxyList freeProxyStyle'})
-        rep = str(k).replace('<div class="centeredProxyList freeProxyStyle">', '')
-        rep = rep.replace('</div>', '')
+        rep = k.get_text()
         with open('ProxyPy_http.txt', 'a') as ww:
             ww.writelines(rep)
             ww.close()
@@ -77,17 +73,7 @@ class scrape_proxy:
             ff.close()
 
         sleep(2)
-
-        urll = 'https://www.proxy-daily.com/'
-        r = requests.get(urll).text
-        soup = BeautifulSoup(r, features='html.parser')
-        k = soup.find('div', {'class': 'centeredProxyList freeProxyStyle'})
-        rep = str(k).replace('<div class="centeredProxyList freeProxyStyle">', '')
-        rep = rep.replace('</div>', '')
-        with open('ProxyPy_socks4.txt', 'a') as ww:
-            ww.writelines(rep)
-            ww.close()
-
+        
         print('Removing Duplicates Please Wait')
         sleep(2)
 
